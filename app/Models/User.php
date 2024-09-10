@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,6 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',        // Ajout du numéro de téléphone
+        'address',      // Ajout de l'adresse
+        'city',         // Ajout de la ville
+        'country',      // Ajout du pays
+        'postal_code',  // Ajout du code postal
+        'status',       // Statut de l'utilisateur (par défaut 'active')
+        'group',        // Groupe (par défaut 'user' ou 'subscriber')
     ];
 
     /**
@@ -42,4 +50,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class);
+    }
 }

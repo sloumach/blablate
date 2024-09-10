@@ -19,7 +19,18 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // Colonnes supplémentaires
+            $table->string('phone')->nullable();
+            $table->boolean('verified')->default(false); // Indique si l'utilisateur est vérifié
+            $table->enum('group', ['user', 'subscriber'])->default('user'); // Groupe (user ou subscriber)
+            $table->string('status')->default('active'); // Statut de l'utilisateur
+            $table->string('address')->nullable(); // Adresse de l'utilisateur
+            $table->string('city')->nullable(); // Ville
+            $table->string('country')->nullable(); // Pays
+            $table->string('postal_code')->nullable(); // Code postal
         });
+
     }
 
     /**
