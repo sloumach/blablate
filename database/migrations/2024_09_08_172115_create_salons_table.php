@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conversations', function (Blueprint $table) {
+        Schema::create('salons', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->default('public'); // Peut être 'public' ou 'private'
-            $table->string('name')->nullable(); // Nom du salon, null pour les conversations privées
-            $table->foreignId('salon_id')->nullable()->constrained('salons')->onDelete('cascade');
+            $table->string('name'); // Nom du salon
+            $table->text('description')->nullable(); // Description du salon
+            $table->boolean('is_active')->default(true); // Statut du salon (actif ou non)
             $table->timestamps();
         });
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conversations');
+        Schema::dropIfExists('salons');
     }
 };

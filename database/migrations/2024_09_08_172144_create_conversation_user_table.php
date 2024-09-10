@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('conversation_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('conversation_id')->constrained()->onDelete('cascade'); // Référence à la conversation
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Référence à l'utilisateur
             $table->timestamps();
         });
+
     }
 
     /**
